@@ -1,21 +1,41 @@
 using System;
 using System.Runtime.InteropServices;
 
-class Scripture
+public class Scripture
 {
-    private string _scripture;
+    public string Reference { get; private set;}
+    private List<Word> Words { get; set;}
 
-    public Scripture(string scripture)
+    Reference r = new Reference("Helaman", "12", "7", "8");
+
+    public Scripture(string text)
     {
-        _scripture = scripture;
+        Reference = r.Getreference();
+        Words = text.Split(' ').Select(word => new Word(word)).ToList();
     }
-    public string Getscripture()
+
+    public void HideRandomWords(int numToHide)
     {
-        return _scripture;
+        var random = new Random();
+        var wordsToHide = random.Next(Words.Count);
+        for (int i = 0; i < numToHide; i++)
+        {
+            int index = random.Next(Words.Count);
+            while (Words[index].IsHidden) // Ensure not hiding a word already hidden
+            {
+                index = random.Next(Words.Count);
+            }
+            Words[index].Hide();
+        }
     }
-    public void Setscripture()
+
+    public bool AllWordsHidden()
     {
-        Word w = new Word();
-        _scripture = w.Hider();
+        return Words.All(word => word.IsHidden);
+    }
+
+    public override string ToString()
+    {
+        return $"{Reference}\n\n{string.Join(" ", Words)}";
     }
 }
