@@ -17,7 +17,7 @@ public class Program
                 break;
 
             scripture.HideRandomWords(2);
-            Console.Clear();
+            // Console.Clear();
         }
 
         Console.WriteLine("Congratulations! You have hidden all the words in the scripture.");
