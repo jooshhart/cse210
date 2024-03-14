@@ -1,0 +1,2 @@
+ChecklistGoal,eat,eat dinner,50,3,False
+50
